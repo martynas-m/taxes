@@ -7,7 +7,7 @@ namespace Taxes.Repositories
 {
 	internal class SqlTaxRepository : ITaxRepository
 	{
-		private SqlConnection _cnn;
+		private readonly SqlConnection _cnn;
 		private readonly SqlTransaction _tran;
 
 		private const string InsertTaxSql = 
@@ -20,12 +20,7 @@ namespace Taxes.Repositories
 		private const string FindTaxSql = 
 			"select Tax from Taxes t " +
 			"inner join Municipalities m on t.MunicipalityId = m.Id " +
-			"where t.TaxType = @t and m.Name = @m and [Start] = @start and [End] = @end";
-
-		private enum TaxType
-		{
-			Daily = 1
-		};
+			"where t.TaxType = @taxType and m.Name = @m and @dateAt between [Start] and [End];";
 
 		public SqlTaxRepository(SqlConnection cnn, SqlTransaction tran)
 		{
@@ -33,30 +28,24 @@ namespace Taxes.Repositories
 			_tran = tran;
 		}
 
-		public float? FindDailyTax(string municipality, DateTime dateFor)
+		public void AddTax(string municipality, TaxType taxType, float tax, DateTime start, DateTime end)
+		{
+			_cnn.Execute(InsertTaxSql,
+				new {m = municipality, taxType, start, end, tax},
+				_tran);
+		}
+
+		public float? FindTax(string municipality, TaxType taxType, DateTime dateAt)
 		{
 			var result = _cnn.Query<float>(FindTaxSql, 
 				new
 				{
 					m = municipality,
-					t = TaxType.Daily,
-					start = dateFor,
-					end = dateFor
+					taxType,
+					dateAt 
 				}, _tran)
 			.FirstOrDefault();
 			return result;
-		}
-
-		public float? FindWeeklyTax(string municipality, DateTime dateFor)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void AddDailyTax(string municipality, DateTime effectiveDate, float tax)
-		{
-			_cnn.Execute(InsertTaxSql,
-				new {m = municipality, taxType = TaxType.Daily, start = effectiveDate, end = effectiveDate, tax},
-				_tran);
 		}
 	}
 }

@@ -36,8 +36,8 @@ namespace Taxes.Tests
 
 		private void Init_tax_repo_with_default_values()
 		{
-			_taxRepo.FindDailyTax(Vilnius, _dailyTaxDate).Returns(DailyTax);
-			_taxRepo.FindWeeklyTax(Vilnius, _weeklyTaxDate).Returns(WeeklyTax);
+			_taxRepo.FindTax(Vilnius, TaxType.Daily, _dailyTaxDate).Returns(DailyTax);
+			_taxRepo.FindTax(Vilnius, TaxType.Weekly, _weeklyTaxDate).Returns(WeeklyTax);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using NUnit.Framework;
 using Taxes.Repositories;
 
@@ -31,10 +32,10 @@ namespace Taxes.Tests
 		}
 
 		[Test]
-		public void Can_add_daily_tax()
+		public void Can_add_and_then_find_tax_by_type()
 		{
-			_sut.AddDailyTax("Vilnius", DateTime.Today, .1f);
-			Assert.That(_sut.FindDailyTax("Vilnius", DateTime.Today), Is.Not.Null.And.EqualTo(0.1f));
+			_sut.AddTax("Vilnius", TaxType.Daily, .1f, DateTime.Today, DateTime.Today);
+			Assert.That(_sut.FindTax("Vilnius", TaxType.Daily, DateTime.Today), Is.Not.Null.And.EqualTo(0.1f));
 		}
 	}
 }

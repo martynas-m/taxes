@@ -4,8 +4,13 @@ namespace Taxes
 {
 	public interface ITaxRepository
 	{
-		float? FindDailyTax(string municipality, DateTime dateFor);
-		float? FindWeeklyTax(string municipality, DateTime dateFor);
-		void AddDailyTax(string vilnius, DateTime today, float tax);
+		void AddTax(string municipality, TaxType taxType, float tax, DateTime start, DateTime end);
+		float? FindTax(string municipality, TaxType taxType, DateTime effeciteDate);
+	}
+
+	public enum TaxType
+	{
+		Daily = 1,
+		Weekly = 2,
 	}
 }

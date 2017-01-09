@@ -13,7 +13,7 @@ namespace Taxes
 
 		public float? GetForDate(string muninicipality, DateTime date)
 		{
-			return _taxRepo.FindDailyTax(muninicipality, date) ?? _taxRepo.FindWeeklyTax(muninicipality, date);
+			return _taxRepo.FindTax(muninicipality, TaxType.Daily, date) ?? _taxRepo.FindTax(muninicipality, TaxType.Weekly, date);
 		}
 	}
 }
