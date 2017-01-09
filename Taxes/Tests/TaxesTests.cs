@@ -1,4 +1,5 @@
 ﻿using System;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace Taxes.Tests
@@ -7,24 +8,36 @@ namespace Taxes.Tests
 	class TaxesTests
 	{
 		private TaxProvider _sut;
+		private ITaxRepository _taxRepo;
+		private const string Vilnius = "Vilnius";
+		private readonly DateTime _dailyTaxDate = new DateTime(2016, 5, 13);
+		private readonly DateTime _weeklyTaxDate = new DateTime(2016, 6, 13);
+		private const float DailyTax = 0.1f;
+		private const float WeeklyTax = 0.15f;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_sut = new TaxProvider();
+			_taxRepo = Substitute.For<ITaxRepository>();
+			_sut = new TaxProvider(_taxRepo);
+			Init_tax_repo_with_default_values();
 		}
 		[Test]
-		public void Returns_daily_tax_if_day_matche()
+		public void Returns_dayly_tax_for_municipality_by_date_when_daily_tax_defined_for_date()
 		{
-			Assert.That(_sut.GetForDate(new DateTime(2016, 5, 13)), Is.EqualTo(0.3f));
+			Assert.That(_sut.GetForDate(Vilnius, _dailyTaxDate), Is.EqualTo(DailyTax));
 		}
-	}
 
-	public class TaxProvider
-	{
-		public float GetForDate(DateTime date)
+		[Test]
+		public void Returns_weekly_tax_if_no_daily_tax_defined_for_that_day()
 		{
-			return 0.3f;
+			Assert.That(_sut.GetForDate(Vilnius, _weeklyTaxDate), Is.EqualTo(WeeklyTax));
+		}
+
+		private void Init_tax_repo_with_default_values()
+		{
+			_taxRepo.FindDailyTax(Vilnius, _dailyTaxDate).Returns(DailyTax);
+			_taxRepo.FindWeeklyTax(Vilnius, _weeklyTaxDate).Returns(WeeklyTax);
 		}
 	}
 }

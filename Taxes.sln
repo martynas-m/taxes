@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taxes", "Taxes\Taxes.csproj", "{421CA1EA-EE99-4245-B45B-D7DE4E284D93}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Db", "Db\Db.sqlproj", "{17ABE65E-FEB8-49B0-AD4B-C56CA72E401D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{421CA1EA-EE99-4245-B45B-D7DE4E284D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{421CA1EA-EE99-4245-B45B-D7DE4E284D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{421CA1EA-EE99-4245-B45B-D7DE4E284D93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17ABE65E-FEB8-49B0-AD4B-C56CA72E401D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17ABE65E-FEB8-49B0-AD4B-C56CA72E401D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17ABE65E-FEB8-49B0-AD4B-C56CA72E401D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{17ABE65E-FEB8-49B0-AD4B-C56CA72E401D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17ABE65E-FEB8-49B0-AD4B-C56CA72E401D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17ABE65E-FEB8-49B0-AD4B-C56CA72E401D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
