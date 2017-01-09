@@ -13,7 +13,13 @@ namespace Taxes
 
 		public float? GetForDate(string muninicipality, DateTime date)
 		{
-			return _taxRepo.FindTax(muninicipality, TaxType.Daily, date) ?? _taxRepo.FindTax(muninicipality, TaxType.Weekly, date);
+			foreach (TaxType type in Enum.GetValues(typeof(TaxType)))
+			{
+				var tax = _taxRepo.FindTax(muninicipality, type, date);
+				if (tax.HasValue)
+					return tax;
+			}
+			return null;
 		}
 	}
 }

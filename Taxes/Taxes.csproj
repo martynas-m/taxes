@@ -74,6 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITaxRepository.cs" />
     <Compile Include="Repositories\SqlTaxRepository.cs" />
+    <Compile Include="TaxType.cs" />
     <Compile Include="Tests\SqlDataRepositoryTest.cs" />
     <Compile Include="Tests\TaxesTests.cs" />
     <Compile Include="TaxProvider.cs" />

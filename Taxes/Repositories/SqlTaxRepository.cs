@@ -30,21 +30,20 @@ namespace Taxes.Repositories
 
 		public void AddTax(string municipality, TaxType taxType, float tax, DateTime start, DateTime end)
 		{
-			_cnn.Execute(InsertTaxSql,
+			_cnn.Execute(
+				InsertTaxSql,
 				new {m = municipality, taxType, start, end, tax},
 				_tran);
 		}
 
 		public float? FindTax(string municipality, TaxType taxType, DateTime dateAt)
 		{
-			var result = _cnn.Query<float>(FindTaxSql, 
-				new
-				{
-					m = municipality,
-					taxType,
-					dateAt 
-				}, _tran)
+			var result = _cnn.Query<float?>(
+				FindTaxSql, 
+				new { m = municipality, taxType, dateAt }, 
+				_tran)
 			.FirstOrDefault();
+
 			return result;
 		}
 	}
