@@ -78,6 +78,7 @@
     <Compile Include="Tests\SqlDataRepositoryTest.cs" />
     <Compile Include="Tests\TaxesTests.cs" />
     <Compile Include="TaxProvider.cs" />
+    <Compile Include="Tests\YamlImporterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
