@@ -63,5 +63,11 @@ yearly:
 		{
 			_repository.Received().AddTax("Vilnius", TaxType.Yearly, 0.11f, new DateTime(2017, 1, 1), new DateTime(2017, 12, 31));
 		}
+
+		[Test]
+		public void Elements_should_be_not_required()
+		{
+			
+		}
 	}
 }
