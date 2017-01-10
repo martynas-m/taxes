@@ -78,6 +78,9 @@
     <Compile Include="Tests\SqlDataRepositoryTest.cs" />
     <Compile Include="Tests\TaxesTests.cs" />
     <Compile Include="TaxProvider.cs" />
+    <Compile Include="Importer\YamlImporter.cs" />
+    <Compile Include="Importer\YamlTax.cs" />
+    <Compile Include="Importer\TaxYamlStructure.cs" />
     <Compile Include="Tests\YamlImporterTests.cs" />
   </ItemGroup>
   <ItemGroup>

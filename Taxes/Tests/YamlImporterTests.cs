@@ -2,14 +2,17 @@
 using System.IO;
 using NSubstitute;
 using NUnit.Framework;
-using YamlDotNet.Serialization;
+using Taxes.Importer;
 
 namespace Taxes.Tests
 {
 	[TestFixture]
 	internal class YamlImporterTests
 	{
-			private const string YamlData = 
+		private ITaxRepository _repository;
+		private YamlImporter _sut;
+
+		private const string YamlData = 
 @"
 municipality: Vilnius
 daily:
@@ -28,30 +31,37 @@ yearly:
     tax: 0.11
 ";
 
+		[SetUp]
+		public void Setup()
+		{
+			_repository = Substitute.For<ITaxRepository>();
+			_sut = new YamlImporter(_repository);
+			_sut.Import(new StringReader(YamlData));
+		}
+
 		[Test]
-		public void Can_parse_yaml()
+		public void Can_import_daily_tax()
 		{
-			var repository = Substitute.For<ITaxRepository>();
-			var sut = new YamlImporter(repository);
-			sut.Import(new StringReader(YamlData));
-
-			repository.Received().AddTax("Vilnius", TaxType.Daily, 0.1f, new DateTime(2017, 3, 11), new DateTime(2017,3,11));
-		}
-	}
-
-	internal class YamlImporter
-	{
-		private ITaxRepository _repository;
-
-		public YamlImporter(ITaxRepository repository)
-		{
-			_repository = repository;
+			_repository.Received().AddTax("Vilnius", TaxType.Daily, 0.1f, new DateTime(2017, 3, 11), new DateTime(2017,3,11));
+			_repository.Received().AddTax("Vilnius", TaxType.Daily, 0.13f, new DateTime(2017, 7, 6), new DateTime(2017,7,6));
 		}
 
-		public void Import(TextReader yaml)
+		[Test]
+		public void While_importing_weekly_tax_sets_end_after_seven_days()
 		{
-			var deserializer = new Deserializer();
-			var data = deserializer.Deserialize(yaml);
+			_repository.Received().AddTax("Vilnius", TaxType.Weekly, 0.3f, new DateTime(2017, 8, 11), new DateTime(2017, 8, 18));
+		}
+
+		[Test]
+		public void Importing_monthly_tax_converts_month_to_date()
+		{
+			_repository.Received().AddTax("Vilnius", TaxType.Monthly, 0.4f, new DateTime(2017, 9, 1), new DateTime(2017, 9, 30));
+		}
+
+		[Test]
+		public void Importing_yearly_tax_converts_year_to_date()
+		{
+			_repository.Received().AddTax("Vilnius", TaxType.Yearly, 0.11f, new DateTime(2017, 1, 1), new DateTime(2017, 12, 31));
 		}
 	}
 }
