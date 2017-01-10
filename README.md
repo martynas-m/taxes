@@ -7,5 +7,5 @@ use db project and localhost publish profile to create database. for test to run
 ## what can be found
 
 - adding / searching for taxes
-- started import branch, not finished
+- added import from YAML file
 
