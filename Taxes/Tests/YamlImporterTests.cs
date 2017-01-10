@@ -12,6 +12,10 @@ namespace Taxes.Tests
 		private ITaxRepository _repository;
 		private YamlImporter _sut;
 
+		private const string YamlDataMin =
+@"
+municipality: Vilnius
+";
 		private const string YamlData = 
 @"
 municipality: Vilnius
@@ -67,7 +71,7 @@ yearly:
 		[Test]
 		public void Elements_should_be_not_required()
 		{
-			
+			_sut.Import(new StringReader(YamlDataMin));
 		}
 	}
 }
