@@ -16,7 +16,8 @@ namespace Taxes.Importer
 
 		public void Import(TextReader yaml)
 		{
-			var deserializer = new Deserializer(namingConvention: new CamelCaseNamingConvention());
+			var builder = new DeserializerBuilder();
+			var deserializer = builder.WithNamingConvention(new CamelCaseNamingConvention()).Build();
 			var data = deserializer.Deserialize<YamlStructure>(yaml);
 
 			ParseDaily(data);
